@@ -27,7 +27,7 @@ required_files=${smartd_config:="/usr/local/etc/smartd.conf"}
 pidfile=${smartd_pidfile:="/var/run/smartd.pid"}
 
 command="/usr/local/sbin/smartd"
-command_args="-c ${required_files} -p ${pidfile} ${smartd_args}"
+command_args="-c ${required_files} -p ${pidfile} ${mysmartd_args}"
 
 extra_commands="reload report"
 reload_cmd="smartd_reload"
