@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# PROVIDE: gmirror_prefer
+# REQUIRE: disks syslogd
+# BEFORE: savecore
+# KEYWORD: nojail
+
+. etc/rc.subr
+
+name=gmirror_prefer
+desc="Sets gmirror priority & switches balance to prefer for savecore"
+rcvar=gmirror_prefer_enable
+
+start_cmd="${name}_start"
+stop_cmd=":"
+load_rc_config $name
+: ${gmirror_prefer_enable="NO"}
+: ${gmirror_prefer_mirror=""}
+: ${gmirror_prefer_provider=""}
+: ${gmirror_prefer_priority=1}
+
+gmirror_prefer_start()
+{
+    balance_cmd="gmirror configure -b prefer ${gmirror_prefer_mirror}"
+    priority_cmd="gmirror configure -p ${gmirror_prefer_priority} ${gmirror_prefer_mirror} ${gmirror_prefer_provider}"
+    
+    logger -p local0.notice -t gmirror  "### Configuring ${gmirror_prefer_mirror} balance type & provider priority ###"
+    logger -p local0.notice -t gmirror "Running: ${balance_cmd}"
+    $balance_cmd
+    logger -p local0.notice -t gmirror "Running: ${priority_cmd}"
+    $priority_cmd
+}
+
+run_rc_command "$1"

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# PROVIDE: gmirror_balance
+# REQUIRE: savecore gmirror_prefer syslogd
+# BEFORE:
+# KEYWORD: nojail
+
+. etc/rc.subr
+
+name=gmirror_balance
+desc="Sets gmirror balance"
+rcvar=gmirror_prefer_enable
+
+start_cmd="${name}_start"
+stop_cmd=":"
+load_rc_config $name
+: ${gmirror_prefer_enable="NO"}
+: ${gmirror_prefer_mirror=""}
+: ${gmirror_balance_type="load"}
+
+gmirror_balance_start()
+{
+    balance_cmd="gmirror configure -b ${gmirror_balance_type} ${gmirror_prefer_mirror}"
+    
+    logger -p local0.notice -t gmirror  "### Configuring ${gmirror_prefer_mirror} balance type ###"
+    logger -p local0.notice -t gmirror "Running: ${balance_cmd}"
+    $balance_cmd
+}
+
+run_rc_command "$1"
