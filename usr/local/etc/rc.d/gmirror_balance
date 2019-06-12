@@ -18,7 +18,7 @@ load_rc_config $name
 : ${gmirror_prefer_algo_mirror=""}
 : ${gmirror_balance_algo="load"}
 
-gmirror_balance_start()
+gmirror_balance_algo_start()
 {
     balance_cmd="gmirror configure -b ${gmirror_balance_algo} ${gmirror_prefer_mirror}"
     $balance_cmd
