@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# PROVIDE: gmirror_prefer
-# REQUIRE: disks syslogd
+# PROVIDE: gmirror_prefer_algo
+# REQUIRE: disks
 # BEFORE: savecore
 # KEYWORD: nojail
 
@@ -24,10 +24,7 @@ gmirror_prefer_start()
     balance_cmd="gmirror configure -b prefer ${gmirror_prefer_mirror}"
     priority_cmd="gmirror configure -p ${gmirror_prefer_priority} ${gmirror_prefer_mirror} ${gmirror_prefer_provider}"
     
-    logger -p local0.notice -t gmirror  "### Configuring ${gmirror_prefer_mirror} balance type & provider priority ###"
-    logger -p local0.notice -t gmirror "Running: ${balance_cmd}"
     $balance_cmd
-    logger -p local0.notice -t gmirror "Running: ${priority_cmd}"
     $priority_cmd
 }
 
