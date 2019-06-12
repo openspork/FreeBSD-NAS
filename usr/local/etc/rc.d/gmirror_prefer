@@ -7,23 +7,22 @@
 
 . etc/rc.subr
 
-name=gmirror_prefer
-desc="Sets gmirror priority & switches balance to prefer for savecore"
-rcvar=gmirror_prefer_enable
+name=gmirror_prefer_algo
+desc="Sets gmirror priority & switches balance to prefer"
+rcvar=gmirror_prefer_algo_enable
 
 start_cmd="${name}_start"
 stop_cmd=":"
 load_rc_config $name
-: ${gmirror_prefer_enable="NO"}
-: ${gmirror_prefer_mirror=""}
-: ${gmirror_prefer_provider=""}
-: ${gmirror_prefer_priority=1}
+: ${gmirror_prefer_algo_enable="NO"}
+: ${gmirror_prefer_algo_mirror=""}
+: ${gmirror_prefer_algo_provider=""}
+: ${gmirror_prefer_algo_priority=1}
 
 gmirror_prefer_start()
 {
-    balance_cmd="gmirror configure -b prefer ${gmirror_prefer_mirror}"
-    priority_cmd="gmirror configure -p ${gmirror_prefer_priority} ${gmirror_prefer_mirror} ${gmirror_prefer_provider}"
-    
+    balance_cmd="gmirror configure -b prefer ${gmirror_prefer_algo_mirror}"
+    priority_cmd="gmirror configure -p ${gmirror_prefer_algo_priority} ${gmirror_prefer_algo_mirror} ${gmirror_prefer_algo_provider}"
     $balance_cmd
     $priority_cmd
 }
